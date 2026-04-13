@@ -42,7 +42,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 36px;
+            margin-bottom: 20px;
         }
 
         .mondi-logo img  { height: 38px; width: auto; display: block; }
@@ -54,7 +54,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            margin-bottom: 28px;
+            margin-bottom: 14px;
             flex-wrap: wrap;
         }
 
@@ -78,17 +78,88 @@
             flex-shrink: 0;
         }
 
-        /* ── Filters ── */
-        .filter-container {
-            display: flex;
-            gap: 14px;
+        /* ── Collapsible Filter Panel ── */
+        .filter-panel-wrapper {
             margin-bottom: 14px;
-            flex-wrap: wrap;
             background: var(--card-bg);
-            padding: 22px;
             border-radius: 10px;
             border: 1px solid var(--border);
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .filter-panel-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 22px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .filter-panel-toggle:hover {
+            background: rgba(100,70,255,0.03);
+        }
+
+        .filter-panel-toggle-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-panel-toggle-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .filter-active-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .filter-active-count.visible { display: inline-flex; }
+
+        .filter-chevron {
+            font-size: 12px;
+            color: var(--muted);
+            transition: transform 0.3s ease;
+        }
+
+        .filter-chevron.open { transform: rotate(180deg); }
+
+        .filter-panel-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+        }
+
+        .filter-panel-body.open {
+            max-height: 600px;
+        }
+
+        .filter-panel-inner {
+            padding: 0 22px 22px 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding-top: 18px;
         }
 
         .filter-group {
@@ -191,6 +262,13 @@
             gap: 10px;
         }
 
+        .results-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         .results-count {
             font-size: 14px;
             font-weight: 500;
@@ -208,6 +286,64 @@
             color: var(--accent);
             font-weight: 700;
             font-size: 15px;
+        }
+
+        /* ── Sort Controls ── */
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 6px;
+        }
+
+        .sort-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 6px;
+            white-space: nowrap;
+        }
+
+        .sort-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sort-btn:hover { background: var(--page-bg); color: var(--dark); }
+
+        .sort-btn.active {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .sort-btn svg {
+            width: 11px;
+            height: 11px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .sort-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border);
         }
 
         .export-group { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -288,6 +424,11 @@
             flex-direction: column;
         }
 
+        /* Card left border color by priority */
+        .card.priority-border-high   { border-left-color: #ff585d; }
+        .card.priority-border-medium { border-left-color: #f0a500; }
+        .card.priority-border-low    { border-left-color: #82dcbe; }
+
         .card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 28px rgba(0,0,0,0.08);
@@ -302,7 +443,7 @@
             gap: 14px;
         }
 
-        .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+        .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
         .badge {
             font-size: 11px;
@@ -317,6 +458,49 @@
         .badge.stage    { background: rgba(100,70,255,0.1);   color: var(--purple); border: 1px solid rgba(100,70,255,0.25); }
         .badge.team     { background: rgba(175,70,180,0.12);  color: var(--violet); border: 1px solid rgba(175,70,180,0.3); }
 
+        /* ── Priority Label Badge (prominent) ── */
+        .badge.priority-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.priority-label::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .badge.priority-label.priority-high {
+            background: rgba(255,88,93,0.14);
+            color: #c93438;
+            border: 1.5px solid rgba(255,88,93,0.4);
+        }
+        .badge.priority-label.priority-high::before { background: #ff585d; }
+
+        .badge.priority-label.priority-medium {
+            background: rgba(240,165,0,0.13);
+            color: #a07000;
+            border: 1.5px solid rgba(240,165,0,0.4);
+        }
+        .badge.priority-label.priority-medium::before { background: #f0a500; }
+
+        .badge.priority-label.priority-low {
+            background: rgba(130,220,190,0.2);
+            color: #1a7a5e;
+            border: 1.5px solid rgba(130,220,190,0.5);
+        }
+        .badge.priority-label.priority-low::before { background: #82dcbe; }
+
+        /* Legacy priority badge classes (keep for backward compat) */
         .badge.priority-high   { background: rgba(255,88,93,0.12);  color: #c93438; border: 1px solid rgba(255,88,93,0.3); }
         .badge.priority-medium { background: rgba(255,160,160,0.2); color: #b55050; border: 1px solid rgba(255,160,160,0.4); }
         .badge.priority-low    { background: rgba(130,220,190,0.2); color: #1a7a5e; border: 1px solid rgba(130,220,190,0.5); }
@@ -446,14 +630,16 @@
             body { padding: 16px; }
             .header-title { font-size: 20px; }
             .title-row { flex-direction: column; align-items: flex-start; }
-            .filter-container, .pill-filters-container { flex-direction: column; padding: 16px; }
+            .filter-container { flex-direction: column; }
             .filter-group { min-width: 100%; }
             .card { padding: 16px 14px; }
             .data-grid { grid-template-columns: 1fr; }
             .results-header { flex-direction: column; align-items: flex-start; }
+            .results-header-left { width: 100%; }
             .results-grid { max-height: 60vh; }
             .export-group { width: 100%; }
             .export-btn { flex: 1; justify-content: center; }
+            .sort-controls { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -476,55 +662,97 @@
         <div class="header-title">Regulatory &amp; Policy Tracker</div>
     </div>
 
-    <!-- ── Filters ── -->
-    <div class="filter-container">
-        <div class="filter-group">
-            <label for="searchInput">Keyword Search</label>
-            <input type="text" id="searchInput" placeholder="Search any column…" oninput="filterData()">
+    <!-- ── Collapsible Filter Panel ── -->
+    <div class="filter-panel-wrapper">
+        <div class="filter-panel-toggle" onclick="toggleFilterPanel()" id="filterToggle">
+            <div class="filter-panel-toggle-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                <span class="filter-panel-toggle-title">Filters &amp; Search</span>
+                <span class="filter-active-count" id="activeFilterCount">0</span>
+            </div>
+            <span class="filter-chevron" id="filterChevron">▼</span>
         </div>
-        <div class="filter-group">
-            <label for="monthFilter">Publication Month</label>
-            <select id="monthFilter" onchange="filterData()"><option value="">All Months</option></select>
-        </div>
-        <div class="filter-group">
-            <label for="countryFilter">Country / Region</label>
-            <select id="countryFilter" onchange="filterData()"><option value="">All Countries</option></select>
-        </div>
-        <div class="filter-group">
-            <label for="regulatorFilter">Regulator</label>
-            <select id="regulatorFilter" onchange="filterData()"><option value="">All Regulators</option></select>
-        </div>
-        <div class="filter-group">
-            <label for="topicFilter">Topic</label>
-            <select id="topicFilter" onchange="filterData()"><option value="">All Topics</option></select>
-        </div>
-        <div class="filter-group">
-            <label for="subtopicFilter">Subtopic</label>
-            <select id="subtopicFilter" onchange="filterData()"><option value="">All Subtopics</option></select>
-        </div>
-        <div class="filter-group">
-            <label for="priorityFilter">Priority</label>
-            <select id="priorityFilter" onchange="filterData()"><option value="">All Priorities</option></select>
-        </div>
-    </div>
+        <div class="filter-panel-body" id="filterPanelBody">
+            <div class="filter-panel-inner">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="searchInput">Keyword Search</label>
+                        <input type="text" id="searchInput" placeholder="Search any column…" oninput="filterData(); updateActiveFilterCount()">
+                    </div>
+                    <div class="filter-group">
+                        <label for="monthFilter">Publication Month</label>
+                        <select id="monthFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Months</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="countryFilter">Country / Region</label>
+                        <select id="countryFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Countries</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="regulatorFilter">Regulator</label>
+                        <select id="regulatorFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Regulators</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="topicFilter">Topic</label>
+                        <select id="topicFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Topics</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="subtopicFilter">Subtopic</label>
+                        <select id="subtopicFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Subtopics</option></select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="priorityFilter">Priority</label>
+                        <select id="priorityFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Priorities</option></select>
+                    </div>
+                </div>
 
-    <!-- ── Pill Filters ── -->
-    <div class="pill-filters-container">
-        <div class="pill-group">
-            <span class="pill-label">Action Required:</span>
-            <div id="actionReqPillsContainer" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
-        </div>
-        <div class="pill-group">
-            <span class="pill-label">Risk vs Opportunity:</span>
-            <div id="riskOppPillsContainer" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                <!-- ── Pill Filters (inside collapsible) ── -->
+                <div style="margin-top:16px; display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
+                    <div class="pill-group">
+                        <span class="pill-label">Action Required:</span>
+                        <div id="actionReqPillsContainer" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                    </div>
+                    <div class="pill-group">
+                        <span class="pill-label">Risk vs Opportunity:</span>
+                        <div id="riskOppPillsContainer" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- ── Results Header ── -->
     <div class="results-header">
-        <div class="results-count">
-            Showing <span id="countNumber">0</span> regulations
+        <div class="results-header-left">
+            <div class="results-count">
+                Showing <span id="countNumber">0</span> regulations
+            </div>
+
+            <!-- ── Sort Controls ── -->
+            <div class="sort-controls">
+                <span class="sort-label">Sort:</span>
+
+                <button id="sortDateDesc" class="sort-btn active" onclick="setSort('date','desc')" title="Newest first">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zm0-5h12v-2H3v2zm0-7v2h18V6H3zm16 9.41L17.59 13 16 14.59l3 3-3 3L17.59 21 21 17.59 19 16z"/></svg>
+                    Newest
+                </button>
+                <button id="sortDateAsc" class="sort-btn" onclick="setSort('date','asc')" title="Oldest first">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zm0-5h12v-2H3v2zm0-7v2h18V6H3zm16 5.59L17.59 11 16 12.41l3 2.99-3 2.99L17.59 19 21 16z"/></svg>
+                    Oldest
+                </button>
+
+                <div class="sort-divider"></div>
+
+                <button id="sortPriorityDesc" class="sort-btn" onclick="setSort('priority','desc')" title="High priority first">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    High→Low
+                </button>
+                <button id="sortPriorityAsc" class="sort-btn" onclick="setSort('priority','asc')" title="Low priority first">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    Low→High
+                </button>
+            </div>
         </div>
+
         <div class="export-group">
             <button class="export-btn csv" onclick="exportCSV()">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17v-2h8v2H8zm0-4v-2h8v2H8zm0-4V7h5v2H8z"/></svg>
@@ -550,6 +778,37 @@ const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR
 
 let regulatoryData  = [];
 let currentFiltered = [];
+let currentSortField = 'date';
+let currentSortDir   = 'desc';
+
+// ── Filter panel open by default = false (collapsed) ──
+let filterPanelOpen = false;
+
+function toggleFilterPanel() {
+    filterPanelOpen = !filterPanelOpen;
+    const body    = document.getElementById('filterPanelBody');
+    const chevron = document.getElementById('filterChevron');
+    body.classList.toggle('open', filterPanelOpen);
+    chevron.classList.toggle('open', filterPanelOpen);
+}
+
+function updateActiveFilterCount() {
+    const vals = [
+        document.getElementById('searchInput').value,
+        document.getElementById('monthFilter').value,
+        document.getElementById('countryFilter').value,
+        document.getElementById('regulatorFilter').value,
+        document.getElementById('topicFilter').value,
+        document.getElementById('subtopicFilter').value,
+        document.getElementById('priorityFilter').value,
+    ];
+    const active = vals.filter(v => v && v.trim() !== '').length
+                 + (selectedActionReq ? 1 : 0)
+                 + (selectedRiskOpp   ? 1 : 0);
+    const badge = document.getElementById('activeFilterCount');
+    badge.textContent = active;
+    badge.classList.toggle('visible', active > 0);
+}
 
 Papa.parse(GOOGLE_SHEET_CSV_URL, {
     download: true,
@@ -596,10 +855,8 @@ Papa.parse(GOOGLE_SHEET_CSV_URL, {
 /* ─── Parse a date string into a JS Date (best-effort) ─── */
 function parseDate(str) {
     if (!str || String(str).trim() === '') return null;
-    // Try native parse first (works for ISO, MM/DD/YYYY, etc.)
     const d = new Date(str);
     if (!isNaN(d)) return d;
-    // Try DD/MM/YYYY
     const parts = String(str).split(/[\/-]/);
     if (parts.length === 3) {
         const attempt = new Date(`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`);
@@ -621,6 +878,54 @@ function toMonthLabel(date) {
     return date.toLocaleString('default', { month: 'long', year: 'numeric' });
 }
 
+/* ─── Priority numeric rank (higher = more urgent) ─── */
+const PRIORITY_RANK = { high: 3, critical: 3, medium: 2, low: 1 };
+
+function getPriorityRank(priority) {
+    if (!priority) return 0;
+    const p = priority.toLowerCase();
+    for (const [key, val] of Object.entries(PRIORITY_RANK)) {
+        if (p.includes(key)) return val;
+    }
+    return 0;
+}
+
+/* ─── Sort ─── */
+function setSort(field, dir) {
+    currentSortField = field;
+    currentSortDir   = dir;
+
+    // Update button states
+    ['sortDateDesc','sortDateAsc','sortPriorityDesc','sortPriorityAsc'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+    });
+
+    if (field === 'date' && dir === 'desc')     document.getElementById('sortDateDesc').classList.add('active');
+    if (field === 'date' && dir === 'asc')      document.getElementById('sortDateAsc').classList.add('active');
+    if (field === 'priority' && dir === 'desc') document.getElementById('sortPriorityDesc').classList.add('active');
+    if (field === 'priority' && dir === 'asc')  document.getElementById('sortPriorityAsc').classList.add('active');
+
+    filterData(); // re-render with new sort
+}
+
+function sortData(data) {
+    return [...data].sort((a, b) => {
+        if (currentSortField === 'date') {
+            const da = parseDate(a.pubDate);
+            const db = parseDate(b.pubDate);
+            const ta = da ? da.getTime() : 0;
+            const tb = db ? db.getTime() : 0;
+            return currentSortDir === 'desc' ? tb - ta : ta - tb;
+        }
+        if (currentSortField === 'priority') {
+            const ra = getPriorityRank(a.mondiPriority || a.priority);
+            const rb = getPriorityRank(b.mondiPriority || b.priority);
+            return currentSortDir === 'desc' ? rb - ra : ra - rb;
+        }
+        return 0;
+    });
+}
+
 /* ─── Dropdowns ─── */
 function populateDropdowns() {
     fill('countryFilter',   unique(regulatoryData.map(i => i.country)));
@@ -629,8 +934,7 @@ function populateDropdowns() {
     fill('subtopicFilter',  unique(regulatoryData.map(i => i.subtopic)));
     fill('priorityFilter',  unique(regulatoryData.map(i => i.priority)));
 
-    // Build month dropdown from publication dates — sorted chronologically
-    const monthMap = {}; // key -> label
+    const monthMap = {};
     regulatoryData.forEach(item => {
         const d = parseDate(item.pubDate);
         if (!d) return;
@@ -651,7 +955,7 @@ function fill(id, values) {
     values.forEach(v => sel.add(new Option(v, v)));
 }
 
-/* ─── Pills (case-insensitive) ─── */
+/* ─── Pills ─── */
 let selectedActionReq = null;
 let selectedRiskOpp   = null;
 
@@ -680,16 +984,31 @@ function togglePill(type, valueLower, el) {
         if (type === 'actionReq') selectedActionReq = valueLower;
         if (type === 'riskOpp')   selectedRiskOpp   = valueLower;
     }
+    updateActiveFilterCount();
     filterData();
 }
 
-/* ─── Priority badge class ─── */
+/* ─── Priority label on card ─── */
 function getPriorityClass(priority) {
     if (!priority) return 'priority-medium';
     const p = priority.toLowerCase();
     if (p.includes('high') || p.includes('critical')) return 'priority-high';
     if (p.includes('low'))  return 'priority-low';
     return 'priority-medium';
+}
+
+function getPriorityBorderClass(priority) {
+    if (!priority) return '';
+    const p = (priority || '').toLowerCase();
+    if (p.includes('high') || p.includes('critical')) return 'priority-border-high';
+    if (p.includes('low'))  return 'priority-border-low';
+    return 'priority-border-medium';
+}
+
+function renderPriorityLabel(priority) {
+    if (!priority || String(priority).trim() === '') return '';
+    const cls = getPriorityClass(priority);
+    return `<span class="badge priority-label ${cls}">${priority} Priority</span>`;
 }
 
 /* ─── Toggle Details ─── */
@@ -730,18 +1049,21 @@ function renderCards(filteredData) {
         return;
     }
 
-    container.innerHTML = filteredData.map((item, index) => `
-        <div class="card">
+    container.innerHTML = filteredData.map((item, index) => {
+        const effectivePriority = item.mondiPriority || item.priority;
+        const borderClass = getPriorityBorderClass(effectivePriority);
+        return `
+        <div class="card ${borderClass}">
             <div class="card-header">
                 <div>
                     <h3>${item.development || item.topic || ''}</h3>
                     <div class="topic">${item.topic || ''}${item.subtopic ? ` &bull; ${item.subtopic}` : ''}</div>
                 </div>
                 <div class="badges">
-                    ${item.mondiPriority ? `<span class="badge ${getPriorityClass(item.mondiPriority)}">${item.mondiPriority} Priority</span>` : ''}
-                    ${item.country       ? `<span class="badge country">${item.country}</span>` : ''}
-                    ${item.stage         ? `<span class="badge stage">${item.stage}</span>` : ''}
-                    ${item.team          ? `<span class="badge team">🏷 ${item.team}</span>` : ''}
+                    ${renderPriorityLabel(effectivePriority)}
+                    ${item.country ? `<span class="badge country">${item.country}</span>` : ''}
+                    ${item.stage   ? `<span class="badge stage">${item.stage}</span>` : ''}
+                    ${item.team    ? `<span class="badge team">🏷 ${item.team}</span>` : ''}
                 </div>
             </div>
 
@@ -776,13 +1098,13 @@ function renderCards(filteredData) {
                 </div>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 }
 
 /* ─── Filter ─── */
 function filterData() {
     const search    = document.getElementById('searchInput').value.toLowerCase();
-    const month     = document.getElementById('monthFilter').value;       // "YYYY-MM" or ""
+    const month     = document.getElementById('monthFilter').value;
     const country   = document.getElementById('countryFilter').value;
     const regulator = document.getElementById('regulatorFilter').value;
     const topic     = document.getElementById('topicFilter').value;
@@ -799,7 +1121,6 @@ function filterData() {
         const matchAction    = !selectedActionReq || (item.actionReq || '').toLowerCase() === selectedActionReq;
         const matchRisk      = !selectedRiskOpp   || (item.riskOpp   || '').toLowerCase() === selectedRiskOpp;
 
-        // Month filter: compare "YYYY-MM" key derived from pubDate
         let matchMonth = true;
         if (month) {
             const d = parseDate(item.pubDate);
@@ -810,7 +1131,7 @@ function filterData() {
                matchTopic && matchSubtopic && matchPriority && matchAction && matchRisk;
     });
 
-    renderCards(filtered);
+    renderCards(sortData(filtered));
 }
 
 /* ─── Export CSV ─── */
@@ -844,7 +1165,6 @@ function exportPDF() {
     doc.setFontSize(13); doc.setFont('helvetica','bold');
     doc.text("Mondi – Regulatory & Policy Tracker", 14, 10.5);
 
-    // Show active month filter in PDF header if selected
     const monthSel = document.getElementById('monthFilter');
     const monthLabel = monthSel.value
         ? monthSel.options[monthSel.selectedIndex].text
