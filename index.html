@@ -879,7 +879,7 @@ function toMonthLabel(date) {
 }
 
 /* ─── Priority numeric rank (higher = more urgent) ─── */
-const PRIORITY_RANK = { high: 3, critical: 3, medium: 2, low: 1 };
+const PRIORITY_RANK = { critical: 4, high: 3, medium: 2, low: 1 };
 
 function getPriorityRank(priority) {
     if (!priority) return 0;
