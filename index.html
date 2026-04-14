@@ -679,9 +679,15 @@
                         <label for="searchInput">Keyword Search</label>
                         <input type="text" id="searchInput" placeholder="Search any column…" oninput="filterData(); updateActiveFilterCount()">
                     </div>
+                    <!-- MONTH FILTER COMMENTED OUT — replaced by Priority filter in this position
                     <div class="filter-group">
                         <label for="monthFilter">Publication Month</label>
                         <select id="monthFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Months</option></select>
+                    </div>
+                    -->
+                    <div class="filter-group">
+                        <label for="priorityFilter">Priority</label>
+                        <select id="priorityFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Priorities</option></select>
                     </div>
                     <div class="filter-group">
                         <label for="countryFilter">Country / Region</label>
@@ -699,10 +705,12 @@
                         <label for="subtopicFilter">Subtopic</label>
                         <select id="subtopicFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Subtopics</option></select>
                     </div>
+                    <!-- PRIORITY FILTER MOVED UP (second position, after Keyword Search) — original position was here
                     <div class="filter-group">
                         <label for="priorityFilter">Priority</label>
                         <select id="priorityFilter" onchange="filterData(); updateActiveFilterCount()"><option value="">All Priorities</option></select>
                     </div>
+                    -->
                 </div>
 
                 <!-- ── Pill Filters (inside collapsible) ── -->
@@ -795,7 +803,8 @@ function toggleFilterPanel() {
 function updateActiveFilterCount() {
     const vals = [
         document.getElementById('searchInput').value,
-        document.getElementById('monthFilter').value,
+        // Month filter commented out — not counted here either
+        // document.getElementById('monthFilter').value,
         document.getElementById('countryFilter').value,
         document.getElementById('regulatorFilter').value,
         document.getElementById('topicFilter').value,
@@ -934,6 +943,7 @@ function populateDropdowns() {
     fill('subtopicFilter',  unique(regulatoryData.map(i => i.subtopic)));
     fill('priorityFilter',  unique(regulatoryData.map(i => i.priority)));
 
+    /* Month filter population commented out — monthFilter element no longer in DOM
     const monthMap = {};
     regulatoryData.forEach(item => {
         const d = parseDate(item.pubDate);
@@ -947,6 +957,7 @@ function populateDropdowns() {
     Object.keys(monthMap)
         .sort()
         .forEach(key => sel.add(new Option(monthMap[key], key)));
+    */
 }
 
 function unique(arr) { return [...new Set(arr.filter(Boolean))].sort(); }
@@ -1104,7 +1115,8 @@ function renderCards(filteredData) {
 /* ─── Filter ─── */
 function filterData() {
     const search    = document.getElementById('searchInput').value.toLowerCase();
-    const month     = document.getElementById('monthFilter').value;
+    // Month filter commented out — monthFilter element no longer in DOM
+    // const month     = document.getElementById('monthFilter').value;
     const country   = document.getElementById('countryFilter').value;
     const regulator = document.getElementById('regulatorFilter').value;
     const topic     = document.getElementById('topicFilter').value;
@@ -1121,13 +1133,14 @@ function filterData() {
         const matchAction    = !selectedActionReq || (item.actionReq || '').toLowerCase() === selectedActionReq;
         const matchRisk      = !selectedRiskOpp   || (item.riskOpp   || '').toLowerCase() === selectedRiskOpp;
 
-        let matchMonth = true;
-        if (month) {
-            const d = parseDate(item.pubDate);
-            matchMonth = d ? toMonthKey(d) === month : false;
-        }
+        // Month filter logic commented out
+        // let matchMonth = true;
+        // if (month) {
+        //     const d = parseDate(item.pubDate);
+        //     matchMonth = d ? toMonthKey(d) === month : false;
+        // }
 
-        return matchSearch && matchMonth && matchCountry && matchRegulator &&
+        return matchSearch && matchCountry && matchRegulator &&
                matchTopic && matchSubtopic && matchPriority && matchAction && matchRisk;
     });
 
@@ -1165,10 +1178,13 @@ function exportPDF() {
     doc.setFontSize(13); doc.setFont('helvetica','bold');
     doc.text("Mondi – Regulatory & Policy Tracker", 14, 10.5);
 
-    const monthSel = document.getElementById('monthFilter');
-    const monthLabel = monthSel.value
-        ? monthSel.options[monthSel.selectedIndex].text
-        : 'All Months';
+    // Month filter commented out — using static label for PDF header
+    // const monthSel = document.getElementById('monthFilter');
+    // const monthLabel = monthSel.value
+    //     ? monthSel.options[monthSel.selectedIndex].text
+    //     : 'All Months';
+    const monthLabel = 'All Months';
+
     doc.setFontSize(9); doc.setFont('helvetica','normal');
     doc.text(`Period: ${monthLabel}`, doc.internal.pageSize.width - 14, 10.5, { align: 'right' });
 
